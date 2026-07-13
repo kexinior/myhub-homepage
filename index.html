@@ -3,14 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#0d0e0f">
+  <meta name="theme-color" content="#f4f1ff">
   <meta name="description" content="LXT 的虚拟站长主页：记录技术、游戏、生活与正在完成的小作品。">
   <meta property="og:title" content="LXT · 夜樱记录室">
-  <meta property="og:description" content="虚拟动漫站长夜澄与真实的 LXT，共同整理技术、兴趣与生活。">
-  <meta property="og:image" content="./assets/yozumi-hachi-avatar.png">
+  <meta property="og:description" content="虚拟动漫站长络莉与真实的 LXT，共同整理技术、兴趣与生活。">
+  <meta property="og:image" content="./assets/yozumi-dream-room.png">
+  <meta property="og:image:alt" content="夜樱记录室虚拟站长络莉">
   <meta property="og:type" content="website">
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./styles.css">
+  <link rel="preload" href="./assets/yozumi-dream-room.png" as="image">
+  <link rel="stylesheet" href="./styles.css?v=20260713.7">
   <title>LXT · 夜樱记录室</title>
 </head>
 <body>
@@ -21,9 +23,11 @@
       <span class="brand-mark">✦</span>
       <span><strong>夜樱记录室</strong><small>MYHUB / LXT</small></span>
     </a>
-    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">菜单</button>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="打开菜单">
+      <span aria-hidden="true"></span><span aria-hidden="true"></span>
+    </button>
     <nav id="site-nav" class="site-nav" aria-label="主导航">
-      <a class="active" href="#top">首页</a>
+      <a class="active" href="#top" aria-current="page">首页</a>
       <a href="#about">关于我</a>
       <a href="#interests">兴趣世界</a>
       <a href="#projects">项目</a>
@@ -37,7 +41,7 @@
       <div class="hero-backdrop" aria-hidden="true"></div>
       <div class="hero-copy reveal">
         <p class="eyebrow"><span class="status-dot"></span> 站点在线 · 2026 / 07</p>
-        <h1 id="hero-title">你好，我是 <em>夜澄</em><br><span>这里记录真实的 LXT。</span></h1>
+        <h1 id="hero-title">你好，我是 <em>络莉</em><br><span>这里记录真实的 LXT。</span></h1>
         <p class="hero-lede">一个喜欢写代码、玩游戏，也在认真收集生活微光的人。虚拟形象负责讲故事，真实的我负责把事情做完。</p>
         <div class="hero-actions">
           <a class="button button-primary" href="#projects">看看我的项目 <span>↘</span></a>
@@ -49,19 +53,18 @@
           <div><strong>∞</strong><span>还想探索的世界</span></div>
         </div>
       </div>
-      <div class="hero-character reveal reveal-delay" aria-label="夜澄的动漫女性角色立绘">
-        <div class="character-orbit orbit-one"></div>
-        <div class="character-orbit orbit-two"></div>
-        <img src="./assets/yozumi-hachi.png" alt="银发动漫少女夜澄的全身角色立绘" width="800" height="800">
-        <div class="character-caption"><span>virtual host · CC0 artwork</span><strong>夜澄 / Yozumi</strong><small>Original art by HachiStudio</small></div>
+      <div class="hero-character reveal reveal-delay" aria-label="络莉的梦幻房间角色插画">
+        <span class="character-word" aria-hidden="true">DREAM.LOG</span>
+        <img src="./assets/yozumi-dream-room.png" alt="粉紫长发少女躺在梦幻蓝紫色房间中的插画" width="700" height="870">
+        <div class="character-caption"><span>virtual host · dream archive</span><strong>络莉 / LXT</strong><small>Where quiet nights become stories</small></div>
       </div>
       <div class="hero-note reveal reveal-delay-two"><span>01</span><p>心有所爱，<br>眼里有光，<br>脚下有路。</p></div>
     </section>
 
     <section id="about" class="content-section section-shell" aria-labelledby="about-title">
-      <div class="section-heading reveal"><p class="eyebrow">ABOUT / 01</p><h2 id="about-title">虚拟形象之外，<br><em>这里是真实的我。</em></h2></div>
+      <div class="section-heading reveal"><p class="eyebrow">ABOUT / 01</p><h2 id="about-title">虚拟形象之外，<br><em>这里是真实的我。</em></h2><span class="section-number" aria-hidden="true">01</span></div>
       <div class="about-grid">
-        <div class="about-intro reveal"><img class="avatar" src="./assets/yozumi-hachi-avatar.png" alt="虚拟站长夜澄的动漫头像" width="360" height="360"><p>我把夜澄当作这个网站的站长，也把这里当作一个不会被算法催促的个人空间。写下正在学的东西，放进完成过的作品，偶尔分享一场游戏或一首歌。</p><p class="muted">目前在学习 / 开发 / 记录之间保持平衡。</p></div>
+        <div class="about-intro reveal"><img class="avatar" src="./assets/yozumi-dream-avatar.png" alt="虚拟站长络莉的粉紫长发少女形象" width="360" height="425"><p>我把络莉当作这个网站的站长，也把这里当作一个不会被算法催促的个人空间。写下正在学的东西，放进完成过的作品，偶尔分享一场游戏或一首歌。</p><p class="muted">目前在学习 / 开发 / 记录之间保持平衡。</p></div>
         <div class="fact-list reveal reveal-delay">
           <div><span>称呼</span><strong>LXT · 刘鑫涛</strong></div>
           <div><span>位置</span><strong>追逐梦想的路上</strong></div>
@@ -73,7 +76,7 @@
     </section>
 
     <section id="interests" class="content-section interests-section section-shell" aria-labelledby="interests-title">
-      <div class="section-heading section-heading-row reveal"><div><p class="eyebrow">INTERESTS / 02</p><h2 id="interests-title">我把时间花在<br><em>这些值得的事上。</em></h2></div><p class="section-aside">不追求把兴趣变成标签，只记录它们如何让每一天变得更具体。</p></div>
+      <div class="section-heading section-heading-row reveal"><div><p class="eyebrow">INTERESTS / 02</p><h2 id="interests-title">我把时间花在<br><em>这些值得的事上。</em></h2></div><p class="section-aside">不追求把兴趣变成标签，只记录它们如何让每一天变得更具体。</p><span class="section-number" aria-hidden="true">02</span></div>
       <div class="interest-grid">
         <article class="interest-card interest-card-large reveal"><span class="card-index">01</span><div><p class="card-kicker">PLAY / 游戏</p><h3>在虚拟世界里<br>练习热爱。</h3><p>王者荣耀、原神，以及那些让我愿意再多玩一局的故事。这里不做攻略，只收集值得记住的瞬间。</p><a class="card-link" href="#contact">交换游戏名单 <span>↗</span></a></div></article>
         <article class="interest-card interest-card-tech reveal reveal-delay"><span class="card-index">02</span><div><p class="card-kicker">MAKE / 技术</p><h3>把想法变成<br>能打开的页面。</h3><p>Vue、TypeScript、CSS 和一点点好奇心。持续把练习变成可以使用的小工具。</p><a class="card-link" href="#projects">查看作品 <span>↗</span></a></div></article>
@@ -82,7 +85,7 @@
     </section>
 
     <section id="projects" class="content-section section-shell" aria-labelledby="projects-title">
-      <div class="section-heading section-heading-row reveal"><div><p class="eyebrow">SELECTED WORK / 03</p><h2 id="projects-title">正在做的<br><em>小而具体的事。</em></h2></div><div class="filter-bar" role="group" aria-label="项目筛选"><button class="filter-button is-selected" data-filter="all" type="button">全部</button><button class="filter-button" data-filter="web" type="button">网页</button><button class="filter-button" data-filter="study" type="button">学习</button></div></div>
+      <div class="section-heading section-heading-row reveal"><div><p class="eyebrow">SELECTED WORK / 03</p><h2 id="projects-title">正在做的<br><em>小而具体的事。</em></h2></div><div class="filter-bar" role="group" aria-label="项目筛选"><button class="filter-button is-selected" data-filter="all" type="button" aria-pressed="true">全部</button><button class="filter-button" data-filter="web" type="button" aria-pressed="false">网页</button><button class="filter-button" data-filter="study" type="button" aria-pressed="false">学习</button></div><span class="section-number" aria-hidden="true">03</span></div>
       <div class="project-list">
         <article class="project-item reveal" data-category="web"><span class="project-number">01</span><div class="project-main"><p class="card-kicker">WEB / 个人站点</p><h3>夜樱记录室</h3><p>将个人资料、兴趣和项目放进一个轻盈、可持续更新的静态站点。</p></div><div class="project-meta"><span>HTML / CSS / JS</span><span class="project-state">当前站点</span></div></article>
         <article class="project-item reveal reveal-delay" data-category="study"><span class="project-number">02</span><div class="project-main"><p class="card-kicker">STUDY / 学习记录</p><h3>前端实践手册</h3><p>把 Vue 与 TypeScript 的学习路径整理成可复用的笔记和小实验。</p></div><div class="project-meta"><span>Vue / TypeScript</span><span class="project-state">进行中</span></div></article>
@@ -91,14 +94,14 @@
     </section>
 
     <section id="notes" class="content-section notes-section section-shell" aria-labelledby="notes-title">
-      <div class="section-heading reveal"><p class="eyebrow">LATEST NOTES / 04</p><h2 id="notes-title">最近在记录<br><em>什么。</em></h2></div>
-      <div class="notes-list reveal reveal-delay"><a href="#contact" class="note-item"><span class="note-date">2026.07.08</span><strong>把个人主页从一张图，改成真正的网站</strong><span class="note-arrow">↗</span></a><a href="#contact" class="note-item"><span class="note-date">2026.06.21</span><strong>重新整理了我的前端学习路线</strong><span class="note-arrow">↗</span></a><a href="#contact" class="note-item"><span class="note-date">2026.05.30</span><strong>夜晚适合写代码，也适合听一张完整的专辑</strong><span class="note-arrow">↗</span></a></div>
+      <div class="section-heading reveal"><p class="eyebrow">LATEST NOTES / 04</p><h2 id="notes-title">最近在记录<br><em>什么。</em></h2><span class="section-number" aria-hidden="true">04</span></div>
+      <div class="notes-list reveal reveal-delay"><article class="note-item"><time class="note-date" datetime="2026-07-08">2026.07.08</time><strong>把个人主页从一张图，改成真正的网站</strong><span class="note-index">N.01</span></article><article class="note-item"><time class="note-date" datetime="2026-06-21">2026.06.21</time><strong>重新整理了我的前端学习路线</strong><span class="note-index">N.02</span></article><article class="note-item"><time class="note-date" datetime="2026-05-30">2026.05.30</time><strong>夜晚适合写代码，也适合听一张完整的专辑</strong><span class="note-index">N.03</span></article></div>
     </section>
 
     <section id="contact" class="contact-section section-shell reveal" aria-labelledby="contact-title"><div><p class="eyebrow">STAY IN TOUCH / 05</p><h2 id="contact-title">如果你也喜欢<br><em>认真做点什么。</em></h2><p>欢迎在公开平台找到我。合作、交流，或者只是交换一份游戏名单，都可以。</p></div><div class="contact-links"><span class="contact-pending">GitHub <small>主页链接待补充</small></span><span class="contact-pending">Bilibili <small>主页链接待补充</small></span><button type="button" class="music-control" data-audio-disabled disabled title="等待添加授权音乐">音乐播放器 <span>暂未添加</span></button></div></section>
   </main>
 
-  <footer class="site-footer section-shell"><span>© <span data-year></span> LXT / 夜澄记录室</span><span>Designed for slow nights & clear ideas.</span><a href="#top">回到顶部 ↑</a></footer>
-  <script src="./script.js"></script>
+  <footer class="site-footer section-shell"><span>© <span data-year></span> LXT / 夜樱记录室</span><span>Designed for slow nights & clear ideas.</span><div><a href="./ASSET_LICENSES.md">素材许可</a><a href="#top">回到顶部 ↑</a></div></footer>
+  <script src="./script.js?v=20260713.6"></script>
 </body>
 </html>

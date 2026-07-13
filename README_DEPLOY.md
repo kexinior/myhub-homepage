@@ -34,10 +34,10 @@ git push
 ## 内容修改
 
 - 修改真实姓名、简介和技能：编辑 `index.html` 中的关于我区域。
-- 替换角色：替换 `assets/yozumi-hachi.png` 与 `assets/yozumi-hachi-avatar.png`，并同步更新 `ASSET_LICENSES.md`。当前 HachiStudio 立绘为 CC0，可作为首版公开使用；后续换原创 OC 时保持相同文件尺寸即可。
+- 替换角色：替换 `assets/yozumi-dream-room.png` 与 `assets/yozumi-dream-avatar.png`，并同步更新 `ASSET_LICENSES.md`。当前图片来自用户提供的素材，公开发布前需要确认原图授权；后续换原创 OC 时保持相同文件尺寸即可。
 - 添加项目和动态：在 `index.html` 中复制对应的项目或动态条目。
 - 添加音乐：在确认音频授权后，在联系区域加入本地 `<audio controls>`，并移除 `data-audio-disabled` 状态。
 
 ## 素材授权
 
-请阅读 [ASSET_LICENSES.md](./ASSET_LICENSES.md)。角色立绘具有可核验的 CC0 来源；夜景 SVG 的来源仍需确认，未来可以替换为原创素材。
+请阅读 [ASSET_LICENSES.md](./ASSET_LICENSES.md)。当前页面使用的梦幻房间插画及头像裁切均来自用户提供的素材，原图授权状态需要由素材提供者确认。
