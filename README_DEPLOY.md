@@ -12,18 +12,24 @@ python -m http.server 8080
 
 然后访问 `http://127.0.0.1:8080`。
 
-## 部署到 Cloudflare Pages
+## 部署到 GitHub Pages
 
-1. 登录 Cloudflare，创建一个 Pages 项目。
-2. 选择 Direct Upload，上传整个 `personal_site` 目录。
-3. 不填写 Build command；输出目录使用上传目录本身。
-4. 在 Pages 项目的 Custom domains 中添加：
-   - `myhub.cyou`
-   - `www.myhub.cyou`
-5. 为了让根域名由 Cloudflare 自动签发 HTTPS，进入 NicNames 的域名 DNS 设置，把当前停放用的 Nameserver 替换为 Cloudflare 分配的两条 Nameserver。这里是切换 DNS 管理方，不是转移域名所有权。
-6. 等待 DNS 生效后，在 Cloudflare 中打开 Always Use HTTPS。将 `www.myhub.cyou` 设为跳转到根域名的规范地址。
+站点通过 GitHub Pages 发布，不依赖外部域名或 NicNames：
 
-域名仍由 NicNames 持有和续费。确认新站点正常后，可以停止不需要的 NicNames Website Builder 订阅，但不要取消域名续费。
+- 仓库：`kexinior/myhub-homepage`
+- 发布分支：`main`
+- 发布目录：仓库根目录 `/`
+- 线上地址：<https://kexinior.github.io/myhub-homepage/>
+
+在 GitHub 仓库的 `Settings > Pages` 中，发布源设置为 `Deploy from a branch`、`main`、`/(root)`。每次推送到 `main` 后，GitHub Pages 会自动重新发布。
+
+更新并发布：
+
+```powershell
+git add .
+git commit -m "更新主页"
+git push
+```
 
 ## 内容修改
 
@@ -34,6 +40,4 @@ python -m http.server 8080
 
 ## 素材授权
 
-请阅读 [ASSET_LICENSES.md](./ASSET_LICENSES.md)。当前项目中的角色和夜景 SVG 是原有本地素材，目录没有作者和许可证记录，正式公开或商业使用前需要确认来源或替换为明确授权的素材。
-
-未来可以使用 `project.myhub.cyou`、`ys.myhub.cyou` 等子域名部署其他静态项目。
+请阅读 [ASSET_LICENSES.md](./ASSET_LICENSES.md)。角色立绘具有可核验的 CC0 来源；夜景 SVG 的来源仍需确认，未来可以替换为原创素材。
