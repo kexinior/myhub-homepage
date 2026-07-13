@@ -12,10 +12,84 @@
   --line: rgba(69, 54, 125, 0.14);
   --line-strong: rgba(69, 54, 125, 0.24);
   --header: rgba(255, 255, 255, 0.78);
+  --on-accent: #ffffff;
+  --page-overlay-start: rgba(244, 241, 255, 0.74);
+  --page-overlay-end: rgba(244, 241, 255, 0.94);
+  --grid-line: rgba(117, 104, 199, 0.045);
+  --grid-line-soft: rgba(117, 104, 199, 0.03);
+  --glass-subtle: rgba(255, 255, 255, 0.44);
+  --glass-strong: rgba(255, 255, 255, 0.84);
+  --nav-active: rgba(117, 104, 199, 0.1);
+  --hero-overlay-start: rgba(244, 241, 255, 0.96);
+  --hero-overlay-end: rgba(244, 241, 255, 0.3);
+  --hero-border: rgba(255, 255, 255, 0.72);
+  --caption-bg: rgba(255, 255, 255, 0.84);
+  --tech-card: rgba(227, 243, 250, 0.82);
+  --life-card: rgba(255, 235, 247, 0.82);
+  --filter-bg: rgba(255, 255, 255, 0.58);
+  --project-hover: rgba(117, 104, 199, 0.06);
+  --mobile-nav-bg: rgba(255, 255, 255, 0.96);
+  --button-hover: #6658b8;
+  --sakura-color: #f9a8d4;
+  --sakura-highlight: #fff1f8;
+  --sakura-shadow: rgba(210, 110, 168, 0.2);
+  --ambient-filter: saturate(0.9) blur(8px);
+  --inner-highlight: rgba(255, 255, 255, 0.85);
+  --header-shadow: 0 12px 38px rgba(79, 62, 145, 0.13);
+  --frame-border: rgba(117, 104, 199, 0.2);
+  --frame-shadow: 0 22px 70px rgba(87, 69, 157, 0.14);
+  --image-shadow: 0 28px 70px rgba(74, 57, 145, 0.22);
+  --caption-shadow: 0 12px 30px rgba(68, 50, 134, 0.16);
   --max: 1180px;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
   --shadow: 0 24px 70px rgba(89, 73, 159, 0.18);
   color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  --bg: #151225;
+  --bg-deep: #0b0915;
+  --surface: rgba(34, 29, 57, 0.78);
+  --surface-raised: #2d2549;
+  --ink: #f7f2ff;
+  --ink-soft: #d8cfea;
+  --muted: #aaa1c1;
+  --accent: #efa8cf;
+  --accent-light: #f7c7df;
+  --sage: #8eb7cf;
+  --line: rgba(239, 222, 255, 0.14);
+  --line-strong: rgba(239, 222, 255, 0.25);
+  --header: rgba(21, 18, 37, 0.82);
+  --on-accent: #2c1830;
+  --page-overlay-start: rgba(14, 11, 28, 0.76);
+  --page-overlay-end: rgba(14, 11, 28, 0.95);
+  --grid-line: rgba(239, 168, 207, 0.05);
+  --grid-line-soft: rgba(217, 196, 241, 0.035);
+  --glass-subtle: rgba(68, 55, 100, 0.5);
+  --glass-strong: rgba(31, 25, 53, 0.9);
+  --nav-active: rgba(239, 168, 207, 0.12);
+  --hero-overlay-start: rgba(21, 18, 37, 0.95);
+  --hero-overlay-end: rgba(21, 18, 37, 0.36);
+  --hero-border: rgba(247, 199, 223, 0.16);
+  --caption-bg: rgba(28, 22, 49, 0.88);
+  --tech-card: rgba(31, 47, 68, 0.82);
+  --life-card: rgba(60, 36, 59, 0.82);
+  --filter-bg: rgba(38, 30, 63, 0.76);
+  --project-hover: rgba(239, 168, 207, 0.07);
+  --mobile-nav-bg: rgba(21, 18, 37, 0.98);
+  --button-hover: #f6bddb;
+  --sakura-color: #f7b6d7;
+  --sakura-highlight: #fff3fa;
+  --sakura-shadow: rgba(247, 182, 215, 0.28);
+  --ambient-filter: saturate(0.68) brightness(0.58) blur(8px);
+  --inner-highlight: rgba(255, 255, 255, 0.08);
+  --header-shadow: 0 12px 38px rgba(5, 3, 16, 0.34);
+  --frame-border: rgba(247, 199, 223, 0.16);
+  --frame-shadow: 0 22px 70px rgba(5, 3, 16, 0.34);
+  --image-shadow: 0 28px 70px rgba(5, 3, 16, 0.46);
+  --caption-shadow: 0 12px 30px rgba(5, 3, 16, 0.3);
+  --shadow: 0 24px 70px rgba(5, 3, 16, 0.4);
+  color-scheme: dark;
 }
 
 * {
@@ -36,6 +110,7 @@ body {
   font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", sans-serif;
   line-height: 1.7;
   text-rendering: optimizeLegibility;
+  transition: background-color 280ms var(--ease), color 280ms var(--ease);
 }
 
 body::before {
@@ -45,13 +120,14 @@ body::before {
   content: "";
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(244, 241, 255, 0.74), rgba(244, 241, 255, 0.94) 68%),
+    linear-gradient(var(--page-overlay-start), var(--page-overlay-end) 68%),
     url("./assets/yozumi-dream-room.png");
   background-position: center top;
   background-size: cover;
-  filter: saturate(0.9) blur(8px);
+  filter: var(--ambient-filter);
   opacity: 0.55;
   transform: scale(1.04);
+  transition: opacity 280ms var(--ease), filter 280ms var(--ease);
 }
 
 body::after {
@@ -61,10 +137,11 @@ body::after {
   content: "";
   pointer-events: none;
   background-image:
-    linear-gradient(rgba(117, 104, 199, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(117, 104, 199, 0.03) 1px, transparent 1px);
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-soft) 1px, transparent 1px);
   background-size: 72px 72px;
   mask-image: linear-gradient(to bottom, black, transparent 72%);
+  transition: opacity 280ms var(--ease);
 }
 
 .grain {
@@ -78,7 +155,7 @@ body::after {
 
 ::selection {
   background: var(--accent);
-  color: var(--bg-deep);
+  color: var(--on-accent);
 }
 
 a,
@@ -152,9 +229,10 @@ p {
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--header);
-  box-shadow: 0 12px 38px rgba(79, 62, 145, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  box-shadow: var(--header-shadow), inset 0 1px 0 var(--inner-highlight);
   backdrop-filter: blur(18px) saturate(1.1);
   transform: translateX(-50%);
+  transition: background-color 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease);
 }
 
 .brand {
@@ -179,7 +257,7 @@ p {
 
 .brand:hover .brand-mark {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   transform: rotate(8deg);
 }
 
@@ -200,6 +278,12 @@ p {
   color: var(--muted);
   font: 11px/1 ui-monospace, "Cascadia Mono", monospace;
   letter-spacing: 0.12em;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .site-nav {
@@ -233,12 +317,64 @@ p {
 
 .site-nav a:hover,
 .site-nav a.active {
-  background: rgba(117, 104, 199, 0.1);
+  background: var(--nav-active);
   color: var(--ink);
 }
 
 .site-nav a.active::after {
   transform: scaleX(1);
+}
+
+.theme-toggle {
+  position: relative;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  place-items: center;
+  overflow: hidden;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--glass-subtle);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: inset 0 1px 0 var(--inner-highlight);
+  transition: color 220ms var(--ease), background 220ms var(--ease), border-color 220ms var(--ease), transform 220ms var(--ease);
+}
+
+.theme-toggle:hover {
+  border-color: var(--line-strong);
+  background: var(--nav-active);
+  transform: translateY(-2px);
+}
+
+.theme-toggle:active {
+  transform: translateY(0) scale(0.96);
+}
+
+.theme-icon {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  line-height: 1;
+  transition: opacity 240ms var(--ease), transform 240ms var(--ease);
+}
+
+.theme-icon-moon {
+  opacity: 0;
+  transform: rotate(-45deg) scale(0.65);
+}
+
+html[data-theme="dark"] .theme-icon-sun {
+  opacity: 0;
+  transform: rotate(45deg) scale(0.65);
+}
+
+html[data-theme="dark"] .theme-icon-moon {
+  opacity: 1;
+  transform: rotate(0) scale(1);
 }
 
 .menu-toggle {
@@ -308,21 +444,64 @@ p {
   padding: 132px 0 66px;
   border-bottom: 1px solid var(--line);
   overflow: hidden;
+  isolation: isolate;
 }
 
 .hero-backdrop {
   position: absolute;
   inset: 92px 0 28px 44%;
   z-index: -1;
-  border: 1px solid rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--hero-border);
   border-radius: 34px;
   background-image:
-    linear-gradient(90deg, rgba(244, 241, 255, 0.96) 0%, rgba(244, 241, 255, 0.3) 65%),
+    linear-gradient(90deg, var(--hero-overlay-start) 0%, var(--hero-overlay-end) 65%),
     url("./assets/yozumi-dream-room.png");
   background-position: center;
   background-size: cover;
   filter: saturate(0.8) blur(12px);
   opacity: 0.38;
+}
+
+.sakura-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  contain: layout paint;
+  pointer-events: none;
+}
+
+.sakura-petal {
+  position: absolute;
+  top: -24px;
+  left: var(--petal-left);
+  width: var(--petal-size);
+  aspect-ratio: 1.35 / 1;
+  border-radius: 80% 20% 75% 25%;
+  background: linear-gradient(135deg, var(--sakura-highlight), var(--sakura-color));
+  box-shadow: 0 3px 10px var(--sakura-shadow);
+  filter: blur(var(--petal-blur));
+  opacity: 0;
+  transform-origin: 70% 70%;
+  animation: sakura-fall var(--petal-duration) linear var(--petal-delay) forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes sakura-fall {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -20px, 0) rotate(0deg) scale(0.82);
+  }
+
+  12%,
+  82% {
+    opacity: var(--petal-opacity);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(var(--petal-drift), var(--fall-distance), 0) rotate(var(--petal-spin)) scale(1);
+  }
 }
 
 .hero-copy {
@@ -383,12 +562,12 @@ h1 span {
 
 .button-primary {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
   box-shadow: 0 14px 30px rgba(89, 73, 159, 0.22);
 }
 
 .button-primary:hover {
-  background: #6658b8;
+  background: var(--button-hover);
   transform: translateY(-3px);
 }
 
@@ -455,6 +634,7 @@ h1 span {
 
 .hero-character {
   position: relative;
+  z-index: 2;
   justify-self: end;
   width: min(100%, 455px);
   aspect-ratio: 700 / 870;
@@ -472,10 +652,10 @@ h1 span {
 .hero-character::before {
   inset: -14px 18px 18px -14px;
   z-index: -1;
-  border: 1px solid rgba(117, 104, 199, 0.2);
+  border: 1px solid var(--frame-border);
   border-radius: 30px;
-  background: rgba(255, 255, 255, 0.44);
-  box-shadow: 0 22px 70px rgba(87, 69, 157, 0.14);
+  background: var(--glass-subtle);
+  box-shadow: var(--frame-shadow);
 }
 
 .hero-character::after {
@@ -496,7 +676,7 @@ h1 span {
   height: 100%;
   border-radius: 26px;
   object-fit: cover;
-  box-shadow: 0 28px 70px rgba(74, 57, 145, 0.22);
+  box-shadow: var(--image-shadow);
 }
 
 .character-word {
@@ -519,9 +699,10 @@ h1 span {
   padding: 13px 18px;
   border-left: 2px solid var(--accent);
   border-radius: 0 12px 12px 0;
-  background: rgba(255, 255, 255, 0.84);
-  box-shadow: 0 12px 30px rgba(68, 50, 134, 0.16);
+  background: var(--caption-bg);
+  box-shadow: var(--caption-shadow);
   backdrop-filter: blur(10px);
+  transition: background-color 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease), color 280ms var(--ease);
 }
 
 .character-caption span,
@@ -780,11 +961,11 @@ h1 span {
 }
 
 .interest-card-tech {
-  background: rgba(227, 243, 250, 0.82);
+  background: var(--tech-card);
 }
 
 .interest-card-life {
-  background: rgba(255, 235, 247, 0.82);
+  background: var(--life-card);
 }
 
 .card-index {
@@ -830,8 +1011,9 @@ h1 span {
   padding: 4px;
   border: 1px solid var(--line);
   border-radius: 4px;
-  background: rgba(255, 255, 255, 0.58);
+  background: var(--filter-bg);
   box-shadow: 0 8px 18px rgba(89, 73, 159, 0.08);
+  transition: background-color 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease);
 }
 
 .filter-button {
@@ -850,7 +1032,7 @@ h1 span {
 .filter-button:hover,
 .filter-button.is-selected {
   background: var(--accent);
-  color: #ffffff;
+  color: var(--on-accent);
 }
 
 .filter-button:active {
@@ -887,7 +1069,7 @@ h1 span {
 
 .project-item:hover {
   padding-left: 18px;
-  background: rgba(117, 104, 199, 0.06);
+  background: var(--project-hover);
 }
 
 .project-item:hover::before {
@@ -1109,7 +1291,7 @@ h1 span {
     padding: 8px;
     border: 1px solid var(--line);
     border-radius: 5px;
-    background: rgba(255, 255, 255, 0.96);
+    background: var(--mobile-nav-bg);
     box-shadow: var(--shadow);
     opacity: 0;
     pointer-events: none;
@@ -1432,5 +1614,9 @@ h1 span {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+
+  .sakura-layer {
+    display: none;
   }
 }
