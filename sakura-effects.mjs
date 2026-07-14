@@ -40,21 +40,23 @@ export function createBurstVectors(count, random = Math.random) {
   });
 }
 
+export function getBurstOrigin(clientX, clientY) {
+  return { x: clientX, y: clientY };
+}
+
 const randomBetween = (min, max) => min + Math.random() * (max - min);
 const interactiveSelector = 'a, button, input, select, textarea, summary, [role="button"], [contenteditable="true"], .music-player';
 
 function initSakuraEffects() {
-  const hero = document.querySelector('#top');
-  const layer = hero?.querySelector('.sakura-layer');
-  if (!hero || !layer) return;
+  const layer = document.querySelector('.sakura-layer');
+  if (!layer) return;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const mobileViewport = window.matchMedia('(max-width: 768px)');
-  let heroVisible = false;
   let timer = null;
 
   const settings = () => getSakuraSettings(window.innerWidth);
-  const canAnimate = () => heroVisible && !document.hidden && !reducedMotion.matches;
+  const canAnimate = () => !document.hidden && !reducedMotion.matches;
   const clearPetals = () => layer.replaceChildren();
 
   const addFallingPetal = ({ seeded = false } = {}) => {
@@ -104,16 +106,14 @@ function initSakuraEffects() {
 
   const burstAt = (clientX, clientY) => {
     const config = settings();
-    const rect = hero.getBoundingClientRect();
-    const originX = clientX - rect.left;
-    const originY = clientY - rect.top;
+    const origin = getBurstOrigin(clientX, clientY);
 
     createBurstVectors(config.burstCount).forEach((vector) => {
       if (layer.childElementCount >= config.totalLimit) return;
       const petal = document.createElement('span');
       petal.className = 'sakura-petal sakura-petal--burst';
-      petal.style.setProperty('--burst-left', `${originX.toFixed(1)}px`);
-      petal.style.setProperty('--burst-top', `${originY.toFixed(1)}px`);
+      petal.style.setProperty('--burst-left', `${origin.x.toFixed(1)}px`);
+      petal.style.setProperty('--burst-top', `${origin.y.toFixed(1)}px`);
       petal.style.setProperty('--burst-x', `${vector.x.toFixed(1)}px`);
       petal.style.setProperty('--burst-y', `${vector.y.toFixed(1)}px`);
       petal.style.setProperty('--burst-duration', `${vector.duration.toFixed(0)}ms`);
@@ -126,33 +126,27 @@ function initSakuraEffects() {
     });
   };
 
-  hero.addEventListener('pointerdown', (event) => {
+  document.addEventListener('pointerdown', (event) => {
     if (!canAnimate() || !event.isPrimary || (event.pointerType === 'mouse' && event.button !== 0)) return;
     if (event.target instanceof Element && event.target.closest(interactiveSelector)) return;
     burstAt(event.clientX, event.clientY);
   });
 
-  const observer = new IntersectionObserver(([entry]) => {
-    heroVisible = entry.isIntersecting;
-    if (heroVisible) start();
-    else stop();
-  }, { threshold: 0.05 });
-  observer.observe(hero);
-
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) stop();
-    else if (heroVisible) start();
+    else start();
   });
 
   const handleMotionChange = () => (reducedMotion.matches ? stop() : start());
   const handleViewportChange = () => {
-    if (!heroVisible || reducedMotion.matches) return;
+    if (reducedMotion.matches) return;
     stop();
     start();
   };
 
   reducedMotion.addEventListener?.('change', handleMotionChange);
   mobileViewport.addEventListener?.('change', handleViewportChange);
+  start();
 }
 
 if (typeof document !== 'undefined') initSakuraEffects();

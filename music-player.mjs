@@ -51,6 +51,10 @@ export function normalizeStoredVolume(value, fallback = 0.7) {
   return Number.isFinite(volume) && volume >= 0 && volume <= 1 ? volume : fallback;
 }
 
+export function setIconVisible(icon, visible) {
+  icon.toggleAttribute('hidden', !visible);
+}
+
 const VOLUME_STORAGE_KEY = 'lxt-music-volume';
 const TRACK_STORAGE_KEY = 'lxt-music-track';
 
@@ -140,8 +144,10 @@ function initMusicPlayer() {
 
   const updatePlayingState = () => {
     const playing = !audio.paused && !audio.ended;
-    playIcon.hidden = playing;
-    pauseIcon.hidden = !playing;
+    setIconVisible(playIcon, !playing);
+    setIconVisible(pauseIcon, playing);
+    playButton.classList.toggle('is-playing', playing);
+    playButton.setAttribute('aria-pressed', String(playing));
     playButton.setAttribute('aria-label', playing ? '暂停' : '播放');
     playButton.title = playing ? '暂停' : '播放';
     launchButtons.forEach((button) => button.classList.toggle('is-playing', playing));
@@ -149,8 +155,8 @@ function initMusicPlayer() {
 
   const updateMuteState = () => {
     const muted = audio.muted || audio.volume === 0;
-    volumeIcon.hidden = muted;
-    mutedIcon.hidden = !muted;
+    setIconVisible(volumeIcon, !muted);
+    setIconVisible(mutedIcon, muted);
     muteButton.setAttribute('aria-label', muted ? '取消静音' : '静音');
     muteButton.title = muted ? '取消静音' : '静音';
   };

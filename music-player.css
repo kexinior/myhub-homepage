@@ -208,6 +208,12 @@
   color: var(--on-accent);
 }
 
+.music-play-button.is-playing,
+.music-play-button.is-playing:hover:not(:disabled) {
+  background: var(--ink);
+  color: var(--surface-raised);
+}
+
 .music-timeline {
   display: grid;
   min-width: 0;

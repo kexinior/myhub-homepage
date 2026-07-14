@@ -29,8 +29,8 @@
   </script>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./assets/yozumi-dream-room.png" as="image">
-  <link rel="stylesheet" href="./styles.css?v=20260714.1">
-  <link rel="stylesheet" href="./music-player.css?v=20260714.1">
+  <link rel="stylesheet" href="./styles.css?v=20260714.2">
+  <link rel="stylesheet" href="./music-player.css?v=20260714.2">
   <title>LXT · 夜樱记录室</title>
 </head>
 <body>
@@ -48,6 +48,7 @@
   </svg>
   <a class="skip-link" href="#main">跳到主要内容</a>
   <div class="grain" aria-hidden="true"></div>
+  <div class="sakura-layer" aria-hidden="true"></div>
   <header class="site-header">
     <a class="brand" href="#top" aria-label="返回首页">
       <span class="brand-mark">✦</span>
@@ -78,7 +79,6 @@
   <main id="main">
     <section id="top" class="hero section-shell" aria-labelledby="hero-title">
       <div class="hero-backdrop" aria-hidden="true"></div>
-      <div class="sakura-layer" aria-hidden="true"></div>
       <div class="hero-copy reveal">
         <p class="eyebrow"><span class="status-dot"></span> 站点在线 · 2026 / 07</p>
         <h1 id="hero-title">你好，我是 <em>络莉</em><br><span>这里记录真实的 LXT。</span></h1>
@@ -155,7 +155,7 @@
       </div>
       <div class="music-transport" aria-label="播放控制">
         <button class="music-icon-button" type="button" data-music-previous aria-label="上一首" title="上一首"><svg class="icon" aria-hidden="true"><use href="#icon-skip-back"></use></svg></button>
-        <button class="music-icon-button music-play-button" type="button" data-music-play aria-label="播放" title="播放">
+        <button class="music-icon-button music-play-button" type="button" data-music-play aria-label="播放" aria-pressed="false" title="播放">
           <svg class="icon" data-play-icon aria-hidden="true"><use href="#icon-play"></use></svg>
           <svg class="icon" data-pause-icon aria-hidden="true" hidden><use href="#icon-pause"></use></svg>
         </button>
@@ -184,7 +184,7 @@
     </div>
   </aside>
   <script src="./script.js?v=20260714.1"></script>
-  <script type="module" src="./sakura-effects.mjs?v=20260714.1"></script>
-  <script type="module" src="./music-player.mjs?v=20260714.1"></script>
+  <script type="module" src="./sakura-effects.mjs?v=20260714.2"></script>
+  <script type="module" src="./music-player.mjs?v=20260714.2"></script>
 </body>
 </html>

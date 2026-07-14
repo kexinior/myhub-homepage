@@ -7,6 +7,7 @@ import {
   normalizeStoredVolume,
   normalizePlaylist,
   resolveTrackSource,
+  setIconVisible,
 } from '../music-player.mjs';
 
 test('normalizePlaylist accepts the documented playlist contract', () => {
@@ -104,4 +105,19 @@ test('normalizeStoredVolume distinguishes an absent value from an explicit zero'
   assert.equal(normalizeStoredVolume('0'), 0);
   assert.equal(normalizeStoredVolume('0.45'), 0.45);
   assert.equal(normalizeStoredVolume('2'), 0.7);
+});
+
+test('setIconVisible toggles the hidden attribute for SVG-compatible icons', () => {
+  const attributes = new Set(['hidden']);
+  const icon = {
+    toggleAttribute(name, force) {
+      if (force) attributes.add(name);
+      else attributes.delete(name);
+    },
+  };
+
+  setIconVisible(icon, true);
+  assert.equal(attributes.has('hidden'), false);
+  setIconVisible(icon, false);
+  assert.equal(attributes.has('hidden'), true);
 });

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 import {
   createBurstVectors,
+  getBurstOrigin,
   getSakuraSettings,
 } from '../sakura-effects.mjs';
 
@@ -39,4 +40,8 @@ test('createBurstVectors produces a complete radial burst', () => {
   assert.ok(vectors.some(({ x }) => x < 0));
   assert.ok(vectors.some(({ y }) => y > 0));
   assert.ok(vectors.some(({ y }) => y < 0));
+});
+
+test('getBurstOrigin keeps click particles aligned to full-page viewport coordinates', () => {
+  assert.deepEqual(getBurstOrigin(480, 720), { x: 480, y: 720 });
 });
