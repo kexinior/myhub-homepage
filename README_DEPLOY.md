@@ -1,6 +1,6 @@
 # LXT / 夜樱记录室
 
-这是一个不依赖构建工具的静态个人主页。页面入口是 `index.html`，内容与交互由 `styles.css` 和 `script.js` 提供，图片与 SVG 放在 `assets/`。
+这是一个不依赖构建工具的静态个人主页。页面入口是 `index.html`，通用交互由 `script.js` 提供，樱花与播放器分别由 `sakura-effects.mjs` 和 `music-player.mjs` 提供；播放器样式位于 `music-player.css`，其余页面样式位于 `styles.css`。
 
 ## 本地预览
 
@@ -36,8 +36,9 @@ git push
 - 修改真实姓名、简介和技能：编辑 `index.html` 中的关于我区域。
 - 替换角色：替换 `assets/yozumi-dream-room.png` 与 `assets/yozumi-dream-avatar.png`，并同步更新 `ASSET_LICENSES.md`。当前图片来自用户提供的素材，公开发布前需要确认原图授权；后续换原创 OC 时保持相同文件尺寸即可。
 - 添加项目和动态：在 `index.html` 中复制对应的项目或动态条目。
-- 添加音乐：在确认音频授权后，在联系区域加入本地 `<audio controls>`，并移除 `data-audio-disabled` 状态。
+- 添加音乐：在 `kexinior/my-music` 的 `playlist.json` 中追加具有唯一 `id` 的曲目，并确保 `title`、`artist`、`src` 完整。主页会相对清单地址解析音频路径。
+- 公开播放器：确认所有音频具备公开播放授权后，将 `index.html` 中播放器根元素的 `data-public-enabled` 改为 `true`。默认值 `false` 只允许 `localhost` 和 `127.0.0.1` 本地预览，公开页面不会请求播放清单。
 
 ## 素材授权
 
-请阅读 [ASSET_LICENSES.md](./ASSET_LICENSES.md)。当前页面使用的梦幻房间插画及头像裁切均来自用户提供的素材，原图授权状态需要由素材提供者确认。
+请阅读 [ASSET_LICENSES.md](./ASSET_LICENSES.md)。当前页面使用的梦幻房间插画、头像裁切及音乐均需由素材提供者确认公开使用范围；未确认前不要开启公开播放器。

@@ -473,8 +473,6 @@ html[data-theme="dark"] .theme-icon-moon {
 
 .sakura-petal {
   position: absolute;
-  top: -24px;
-  left: var(--petal-left);
   width: var(--petal-size);
   aspect-ratio: 1.35 / 1;
   border-radius: 80% 20% 75% 25%;
@@ -483,8 +481,19 @@ html[data-theme="dark"] .theme-icon-moon {
   filter: blur(var(--petal-blur));
   opacity: 0;
   transform-origin: 70% 70%;
-  animation: sakura-fall var(--petal-duration) linear var(--petal-delay) forwards;
   will-change: transform, opacity;
+}
+
+.sakura-petal--falling {
+  top: -32px;
+  left: var(--petal-left);
+  animation: sakura-fall var(--petal-duration) linear var(--petal-delay) forwards;
+}
+
+.sakura-petal--burst {
+  top: var(--burst-top);
+  left: var(--burst-left);
+  animation: sakura-burst var(--burst-duration) cubic-bezier(0.16, 0.72, 0.32, 1) forwards;
 }
 
 @keyframes sakura-fall {
@@ -501,6 +510,22 @@ html[data-theme="dark"] .theme-icon-moon {
   100% {
     opacity: 0;
     transform: translate3d(var(--petal-drift), var(--fall-distance), 0) rotate(var(--petal-spin)) scale(1);
+  }
+}
+
+@keyframes sakura-burst {
+  0% {
+    opacity: 0;
+    transform: translate3d(-50%, -50%, 0) rotate(0deg) scale(0.35);
+  }
+
+  14% {
+    opacity: 0.92;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(-50% + var(--burst-x)), calc(-50% + var(--burst-y) + 54px), 0) rotate(var(--burst-spin)) scale(var(--burst-scale));
   }
 }
 

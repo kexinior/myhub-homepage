@@ -29,10 +29,23 @@
   </script>
   <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
   <link rel="preload" href="./assets/yozumi-dream-room.png" as="image">
-  <link rel="stylesheet" href="./styles.css?v=20260713.8">
+  <link rel="stylesheet" href="./styles.css?v=20260714.1">
+  <link rel="stylesheet" href="./music-player.css?v=20260714.1">
   <title>LXT · 夜樱记录室</title>
 </head>
 <body>
+  <svg class="icon-sprite" aria-hidden="true">
+    <symbol id="icon-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+    <symbol id="icon-play" viewBox="0 0 24 24"><polygon points="6 3 20 12 6 21 6 3"/></symbol>
+    <symbol id="icon-pause" viewBox="0 0 24 24"><rect width="4" height="16" x="6" y="4"/><rect width="4" height="16" x="14" y="4"/></symbol>
+    <symbol id="icon-skip-back" viewBox="0 0 24 24"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" x2="5" y1="19" y2="5"/></symbol>
+    <symbol id="icon-skip-forward" viewBox="0 0 24 24"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" x2="19" y1="5" y2="19"/></symbol>
+    <symbol id="icon-volume" viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+    <symbol id="icon-volume-off" viewBox="0 0 24 24"><path d="m11 5-5 4H2v6h4l5 4V5Z"/><line x1="22" x2="16" y1="9" y2="15"/><line x1="16" x2="22" y1="9" y2="15"/></symbol>
+    <symbol id="icon-list-music" viewBox="0 0 24 24"><path d="M21 15V6"/><path d="M18.5 18a2.5 2.5 0 1 0 2.5-2.5V8l-5 1"/><path d="M9 18H3"/><path d="M12 12H3"/><path d="M12 6H3"/></symbol>
+    <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="icon-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66L20 8"/><path d="M20 3v5h-5"/></symbol>
+  </svg>
   <a class="skip-link" href="#main">跳到主要内容</a>
   <div class="grain" aria-hidden="true"></div>
   <header class="site-header">
@@ -49,6 +62,9 @@
         <a href="#notes">动态</a>
         <a href="#contact">联系</a>
       </nav>
+      <button class="header-icon-button music-launch" type="button" data-music-launch disabled aria-label="音乐播放器加载中" title="音乐播放器加载中">
+        <svg class="icon" aria-hidden="true"><use href="#icon-music"></use></svg>
+      </button>
       <button class="theme-toggle" type="button" aria-pressed="false" aria-label="切换到深色模式" title="切换到深色模式">
         <span class="theme-icon theme-icon-sun" aria-hidden="true">☀</span>
         <span class="theme-icon theme-icon-moon" aria-hidden="true">☾</span>
@@ -122,10 +138,53 @@
       <div class="notes-list reveal reveal-delay"><article class="note-item"><time class="note-date" datetime="2026-07-08">2026.07.08</time><strong>把个人主页从一张图，改成真正的网站</strong><span class="note-index">N.01</span></article><article class="note-item"><time class="note-date" datetime="2026-06-21">2026.06.21</time><strong>重新整理了我的前端学习路线</strong><span class="note-index">N.02</span></article><article class="note-item"><time class="note-date" datetime="2026-05-30">2026.05.30</time><strong>夜晚适合写代码，也适合听一张完整的专辑</strong><span class="note-index">N.03</span></article></div>
     </section>
 
-    <section id="contact" class="contact-section section-shell reveal" aria-labelledby="contact-title"><div><p class="eyebrow">STAY IN TOUCH / 05</p><h2 id="contact-title">如果你也喜欢<br><em>认真做点什么。</em></h2><p>欢迎在公开平台找到我。合作、交流，或者只是交换一份游戏名单，都可以。</p></div><div class="contact-links"><span class="contact-pending">GitHub <small>主页链接待补充</small></span><span class="contact-pending">Bilibili <small>主页链接待补充</small></span><button type="button" class="music-control" data-audio-disabled disabled title="等待添加授权音乐">音乐播放器 <span>暂未添加</span></button></div></section>
+    <section id="contact" class="contact-section section-shell reveal" aria-labelledby="contact-title"><div><p class="eyebrow">STAY IN TOUCH / 05</p><h2 id="contact-title">如果你也喜欢<br><em>认真做点什么。</em></h2><p>欢迎在公开平台找到我。合作、交流，或者只是交换一份游戏名单，都可以。</p></div><div class="contact-links"><span class="contact-pending">GitHub <small>主页链接待补充</small></span><span class="contact-pending">Bilibili <small>主页链接待补充</small></span><button type="button" class="music-control music-launch" data-music-launch disabled title="音乐播放器加载中">音乐播放器 <span data-music-entry-status>加载中</span></button></div></section>
   </main>
 
   <footer class="site-footer section-shell"><span>© <span data-year></span> LXT / 夜樱记录室</span><span>Designed for slow nights & clear ideas.</span><div><a href="./ASSET_LICENSES.md">素材许可</a><a href="#top">回到顶部 ↑</a></div></footer>
-  <script src="./script.js?v=20260713.9"></script>
+  <aside class="music-player" data-music-player data-manifest-url="https://raw.githubusercontent.com/kexinior/my-music/main/playlist.json" data-public-enabled="false" aria-label="音乐播放器" hidden>
+    <div class="music-playlist-panel" id="music-playlist" data-music-playlist-panel hidden>
+      <div class="music-playlist-heading"><strong>播放列表</strong><span data-playlist-count>0 首</span></div>
+      <ol class="music-playlist" data-music-playlist></ol>
+    </div>
+    <div class="music-dock">
+      <audio data-music-audio preload="metadata"></audio>
+      <div class="music-track-summary">
+        <span class="music-track-mark" aria-hidden="true"><svg class="icon"><use href="#icon-music"></use></svg></span>
+        <span><strong data-track-title>选择一首音乐</strong><small data-track-artist>夜樱记录室</small></span>
+      </div>
+      <div class="music-transport" aria-label="播放控制">
+        <button class="music-icon-button" type="button" data-music-previous aria-label="上一首" title="上一首"><svg class="icon" aria-hidden="true"><use href="#icon-skip-back"></use></svg></button>
+        <button class="music-icon-button music-play-button" type="button" data-music-play aria-label="播放" title="播放">
+          <svg class="icon" data-play-icon aria-hidden="true"><use href="#icon-play"></use></svg>
+          <svg class="icon" data-pause-icon aria-hidden="true" hidden><use href="#icon-pause"></use></svg>
+        </button>
+        <button class="music-icon-button" type="button" data-music-next aria-label="下一首" title="下一首"><svg class="icon" aria-hidden="true"><use href="#icon-skip-forward"></use></svg></button>
+      </div>
+      <div class="music-timeline">
+        <span data-current-time>0:00</span>
+        <label class="sr-only" for="music-progress">播放进度</label>
+        <input id="music-progress" data-music-progress type="range" min="0" max="0" value="0" step="0.1">
+        <span data-duration>0:00</span>
+      </div>
+      <div class="music-tools">
+        <button class="music-icon-button" type="button" data-music-mute aria-label="静音" title="静音">
+          <svg class="icon" data-volume-icon aria-hidden="true"><use href="#icon-volume"></use></svg>
+          <svg class="icon" data-muted-icon aria-hidden="true" hidden><use href="#icon-volume-off"></use></svg>
+        </button>
+        <label class="sr-only" for="music-volume">音量</label>
+        <input id="music-volume" class="music-volume" data-music-volume type="range" min="0" max="1" value="0.7" step="0.05">
+        <button class="music-icon-button" type="button" data-music-list aria-expanded="false" aria-controls="music-playlist" aria-label="打开播放列表" title="播放列表"><svg class="icon" aria-hidden="true"><use href="#icon-list-music"></use></svg></button>
+        <button class="music-icon-button" type="button" data-music-minimize aria-label="收起播放器" title="收起播放器"><svg class="icon" aria-hidden="true"><use href="#icon-chevron-down"></use></svg></button>
+      </div>
+    </div>
+    <div class="music-message" data-music-message role="status" aria-live="polite" hidden>
+      <span data-music-message-text></span>
+      <button type="button" data-music-retry hidden><svg class="icon" aria-hidden="true"><use href="#icon-refresh"></use></svg>重试</button>
+    </div>
+  </aside>
+  <script src="./script.js?v=20260714.1"></script>
+  <script type="module" src="./sakura-effects.mjs?v=20260714.1"></script>
+  <script type="module" src="./music-player.mjs?v=20260714.1"></script>
 </body>
 </html>
