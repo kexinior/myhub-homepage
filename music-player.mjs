@@ -1,4 +1,62 @@
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
+const METING_API_ORIGIN = 'https://api.i-meto.com';
+const METING_API_PATH = '/meting/api';
+const METING_PLATFORMS = new Set(['netease', 'tencent', 'kugou', 'kuwo', 'baidu']);
+
+export function buildMetingSearchUrl(apiUrl, platform, query) {
+  try {
+    const url = new URL(apiUrl);
+    const server = String(platform ?? '').trim().toLowerCase();
+    const term = String(query ?? '').trim();
+    if (url.protocol !== 'https:' || url.origin !== METING_API_ORIGIN || url.pathname !== METING_API_PATH) {
+      throw new Error('untrusted endpoint');
+    }
+    if (!METING_PLATFORMS.has(server) || !term || term.length > 40) throw new Error('invalid query');
+    url.search = '';
+    url.searchParams.set('server', server);
+    url.searchParams.set('type', 'search');
+    url.searchParams.set('id', term);
+    return url.href;
+  } catch {
+    throw new Error('Invalid hosted Meting API request');
+  }
+}
+
+export function normalizeMetingApiTracks(payload, { limit = 24 } = {}) {
+  if (!Array.isArray(payload)) throw new Error('Invalid hosted Meting API response');
+  const maxTracks = Math.min(Math.max(Number(limit) || 24, 1), 24);
+  const ids = new Set();
+  const tracks = [];
+
+  for (const item of payload) {
+    if (tracks.length >= maxTracks) break;
+    const title = String(item?.title ?? '').trim();
+    const artist = String(item?.author ?? '').trim();
+    const rawUrl = String(item?.url ?? '').trim();
+    if (!title || !artist || !rawUrl || title.length > 200 || artist.length > 200 || rawUrl.length > 4096) continue;
+
+    try {
+      const url = new URL(rawUrl);
+      const server = url.searchParams.get('server');
+      const sourceId = url.searchParams.get('id');
+      if (url.protocol !== 'https:' || url.origin !== METING_API_ORIGIN || url.pathname !== METING_API_PATH) continue;
+      if (!METING_PLATFORMS.has(server) || !sourceId || !/^[A-Za-z0-9_-]{1,100}$/.test(sourceId)) continue;
+      const id = `${server}:${sourceId}`;
+      if (ids.has(id)) continue;
+
+      const artwork = typeof item?.pic === 'string' && item.pic.startsWith(`${METING_API_ORIGIN}${METING_API_PATH}`)
+        ? item.pic
+        : null;
+      ids.add(id);
+      tracks.push({ id, title, artist, url: url.href, ...(artwork ? { artwork } : {}) });
+    } catch {
+      // Ignore malformed third-party results.
+    }
+  }
+
+  if (tracks.length === 0) throw new Error('Hosted Meting API has no playable tracks');
+  return tracks;
+}
 
 export function normalizeMetingTracks(payload, { limit = 24 } = {}) {
   if (payload?.version !== 1 || payload?.source !== 'meting' || !Array.isArray(payload.tracks)) {
@@ -87,7 +145,15 @@ function initMusicPlayer() {
   const player = document.querySelector('[data-music-player]');
   if (!player) return;
 
+  const sourceType = player.dataset.sourceType || 'self-hosted';
   const manifestUrl = player.dataset.manifestUrl;
+  const platform = player.dataset.platform || 'netease';
+  const queries = String(player.dataset.queries || '')
+    .split(',')
+    .map((query) => query.trim())
+    .filter((query) => query && query.length <= 40)
+    .slice(0, 3);
+  const trackLimit = Math.min(Math.max(Number(player.dataset.limit) || 24, 1), 24);
   const publicEnabled = player.dataset.publicEnabled === 'true';
   const launchButtons = [...document.querySelectorAll('[data-music-launch]')];
   const entryStatus = document.querySelector('[data-music-entry-status]');
@@ -244,10 +310,23 @@ function initMusicPlayer() {
     setEntryState('加载中', { disabled: true, titleText: '音乐播放器加载中' });
 
     try {
-      const response = await fetch(manifestUrl, { cache: 'no-store' });
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      const payload = await response.json();
-      tracks = normalizeMetingTracks(payload);
+      if (sourceType === 'hosted-meting') {
+        if (queries.length === 0) throw new Error('No Meting search queries configured');
+        const perQueryLimit = Math.max(1, Math.ceil(trackLimit / queries.length));
+        const payloads = await Promise.all(queries.map(async (query) => {
+          const searchUrl = buildMetingSearchUrl(manifestUrl, platform, query);
+          const response = await fetch(searchUrl, { cache: 'no-store' });
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const payload = await response.json();
+          if (!Array.isArray(payload)) throw new Error('Invalid hosted Meting API response');
+          return payload.slice(0, perQueryLimit);
+        }));
+        tracks = normalizeMetingApiTracks(payloads.flat(), { limit: trackLimit });
+      } else {
+        const response = await fetch(manifestUrl, { cache: 'no-store' });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        tracks = normalizeMetingTracks(await response.json(), { limit: trackLimit });
+      }
       renderPlaylist();
       const storedTrack = readStorage(TRACK_STORAGE_KEY);
       const storedIndex = tracks.findIndex((track) => track.id === storedTrack);

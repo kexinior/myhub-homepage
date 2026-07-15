@@ -36,8 +36,8 @@ git push
 - 修改真实姓名、简介和技能：编辑 `index.html` 中的关于我区域。
 - 替换角色：替换 `assets/yozumi-dream-room.png` 与 `assets/yozumi-dream-avatar.png`，并同步更新 `ASSET_LICENSES.md`。当前图片来自用户提供的素材，公开发布前需要确认原图授权；后续换原创 OC 时保持相同文件尺寸即可。
 - 添加项目和动态：在 `index.html` 中复制对应的项目或动态条目。
-- 添加音乐：播放器由本地 `music-server.mjs` 通过 `@meting/core` 查询平台歌单，不再读取 `kexinior/my-music` 的 `playlist.json`。部署时需要单独运行 Node 服务，并将页面的 `/api/music` 反向代理到该服务。
-- 公开播放器：确认所有音频具备公开播放授权后，将 `index.html` 中播放器根元素的 `data-public-enabled` 改为 `true`。默认值 `false` 只允许 `localhost` 和 `127.0.0.1` 本地预览，公开页面不会请求播放清单。
+- 添加音乐：在 `index.html` 的播放器根元素上修改 `data-platform`、`data-queries` 和 `data-limit`。GitHub Pages 直接调用 Meting 托管接口，不再读取 `kexinior/my-music` 的 `playlist.json`。
+- 自托管接口：需要完全控制 API 时可以部署 `music-server.mjs`，并将播放器改回自托管 `/api/music` 地址；当前 GitHub Pages 配置不依赖 Node 服务。
 
 ## 素材授权
 

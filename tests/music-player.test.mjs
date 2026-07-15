@@ -6,8 +6,39 @@ import {
   isMusicEnabled,
   normalizeStoredVolume,
   normalizeMetingTracks,
+  normalizeMetingApiTracks,
+  buildMetingSearchUrl,
   setIconVisible,
 } from '../music-player.mjs';
+
+test('normalizeMetingApiTracks maps the hosted Meting search response', () => {
+  const tracks = normalizeMetingApiTracks([
+    {
+      title: '晴天',
+      author: '周杰伦',
+      url: 'https://api.i-meto.com/meting/api?server=netease&type=url&id=186016&auth=abc',
+      pic: 'https://api.i-meto.com/meting/api?server=netease&type=pic&id=123&auth=def',
+    },
+  ]);
+
+  assert.deepEqual(tracks, [
+    {
+      id: 'netease:186016',
+      title: '晴天',
+      artist: '周杰伦',
+      url: 'https://api.i-meto.com/meting/api?server=netease&type=url&id=186016&auth=abc',
+      artwork: 'https://api.i-meto.com/meting/api?server=netease&type=pic&id=123&auth=def',
+    },
+  ]);
+});
+
+test('buildMetingSearchUrl locks direct browser requests to the hosted Meting API', () => {
+  assert.equal(
+    buildMetingSearchUrl('https://api.i-meto.com/meting/api', 'netease', '周杰伦'),
+    'https://api.i-meto.com/meting/api?server=netease&type=search&id=%E5%91%A8%E6%9D%B0%E4%BC%A6',
+  );
+  assert.throws(() => buildMetingSearchUrl('https://example.test/api', 'netease', '周杰伦'), /Meting/);
+});
 
 test('normalizeMetingTracks accepts the server playlist contract', () => {
   const tracks = normalizeMetingTracks({

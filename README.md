@@ -20,18 +20,18 @@ python -m http.server 8080
 node --test tests/*.test.mjs
 ```
 
-播放器使用本地 Node 服务接入开源的 Meting 聚合框架，通过网易云音乐、QQ 音乐、酷狗、酷我和百度音乐查询中文歌单；页面不再保留 Audius 或其他备用音源。播放器请求 `/api/music` 获取曲目元数据和播放地址，失败时只显示错误与重试，不会切换到其他来源。
+播放器通过 `https://api.i-meto.com/meting/api` 接入 Meting 托管接口，GitHub Pages 可以直接跨域读取中文歌单；页面不保留 Audius 或其他备用音源。接口失败时只显示错误与重试，不会切换到其他来源。
 
-Meting 服务端默认查询“周杰伦、林俊杰、古风”，可通过 `platform`、`queries` 和 `limit` 调整。由于 GitHub Pages 只能托管静态文件，线上部署需要另行运行 `music-server.mjs` 并将页面的 `/api/music` 反向代理到该服务；默认公开页面不会在没有后端时假装可用。平台音频版权仍由对应平台和权利人负责，公开部署前请确认使用范围。
+页面默认查询“周杰伦、林俊杰、古风”，可通过播放器根元素的 `data-platform`、`data-queries` 和 `data-limit` 调整。`music-server.mjs` 仍可用于自托管 Meting，但 GitHub Pages 不依赖它。平台音频版权仍由对应平台和权利人负责，公开部署前请确认使用范围。
 
-启动完整播放器：
+本地预览可继续使用任意静态服务器。若需要验证自托管接口：
 
 ```powershell
 npm install
 npm start
 ```
 
-然后访问 `http://127.0.0.1:8080/`。仅运行 `python -m http.server` 不会提供 Meting API。
+然后访问 `http://127.0.0.1:8080/`。
 
 线上地址：[https://kexinior.github.io/myhub-homepage/](https://kexinior.github.io/myhub-homepage/)
 
