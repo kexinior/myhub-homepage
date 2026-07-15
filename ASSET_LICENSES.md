@@ -1,12 +1,12 @@
 # 素材与授权记录
 
-更新时间：2026-07-14
+更新时间：2026-07-15
 
 | 文件 | 来源 | 当前授权状态 | 使用说明 |
 | --- | --- | --- | --- |
 | `assets/yozumi-dream-room.png` | 用户于 2026-07-13 提供 | 用户提供，公开发布前请自行确认原图使用权 | 当前主页主视觉、关于我头像裁切与社交分享图。 |
 | `assets/yozumi-dream-avatar.png` | 基于用户提供的同一图片 | 用户提供图片的局部裁切 | 关于我区域使用的人物上半身头像。 |
 | 播放器控制图标 | [Lucide](https://github.com/lucide-icons/lucide) | ISC License | 页面内以内联 SVG 符号使用音乐、播放、音量和列表等图标。 |
-| `kexinior/my-music/157 孙燕姿-遇见.mp3` | 用户的公开音乐仓库 | 公开播放授权未确认 | 仅供本地播放器预览；线上播放器默认禁用。 |
+| Meting 聚合曲目与 stream API | [metowolf/Meting](https://github.com/metowolf/Meting) / [@meting/core](https://www.npmjs.com/package/@meting/core) | Meting 代码为 MIT；平台音频版权由对应平台与权利人决定，逐曲确认 | 本地 Node 服务动态查询，不在本仓库保存音频文件。 |
 
-公开发布前请确认插画与音频的使用授权范围。将播放器界面保持禁用并不能改变音频文件已存在于公开仓库的事实；若音频本身不应公开，应将音乐仓库设为私有或移除文件。
+公开发布前请确认插画与音频的使用授权范围。Meting API 返回平台音频地址并不等同于获得商业播放或再分发授权。

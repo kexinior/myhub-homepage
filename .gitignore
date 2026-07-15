@@ -1,4 +1,3 @@
-.DS_Store
-Thumbs.db
-Desktop.ini
-*.log
+node_modules/
+.env
+.env.local

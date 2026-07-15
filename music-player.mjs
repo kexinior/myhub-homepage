@@ -1,38 +1,47 @@
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
 
-export function normalizePlaylist(payload) {
-  if (payload?.version !== 1 || !Array.isArray(payload.tracks) || payload.tracks.length === 0 || payload.tracks.length > 100) {
-    throw new Error('播放清单格式无效');
+export function normalizeMetingTracks(payload, { limit = 24 } = {}) {
+  if (payload?.version !== 1 || payload?.source !== 'meting' || !Array.isArray(payload.tracks)) {
+    throw new Error('Invalid Meting source response');
   }
 
+  const maxTracks = Math.min(Math.max(Number(limit) || 24, 1), 24);
   const ids = new Set();
-  const tracks = payload.tracks.map((track) => {
-    const fields = ['id', 'title', 'artist', 'src'];
-    const valid = fields.every((field) => typeof track?.[field] === 'string' && track[field].trim());
-    const lengthsValid = track?.id?.length <= 100
-      && track?.title?.length <= 200
-      && track?.artist?.length <= 200
-      && track?.src?.length <= 2048;
-    if (!valid || !lengthsValid || ids.has(track.id)) throw new Error('播放清单格式无效');
-    ids.add(track.id);
+  const tracks = [];
+  for (const item of payload.tracks) {
+    if (tracks.length >= maxTracks) break;
+    const id = String(item?.id ?? '').trim();
+    const title = String(item?.title ?? '').trim();
+    const artist = String(item?.artist ?? '').trim();
+    const rawUrl = String(item?.url ?? '').trim();
+    if (!id || !title || !artist || !rawUrl || ids.has(id)) continue;
+    if (id.length > 100 || title.length > 200 || artist.length > 200 || rawUrl.length > 4096) continue;
 
-    return Object.fromEntries(fields.map((field) => [field, track[field].trim()]));
-  });
-
-  return tracks;
-}
-
-export function resolveTrackSource(source, manifestUrl) {
-  try {
-    const manifest = new URL(manifestUrl);
-    const resolved = new URL(source, manifest);
-    if (manifest.protocol !== 'https:' || resolved.protocol !== 'https:' || resolved.origin !== manifest.origin) {
-      throw new Error('音频地址无效');
+    let url;
+    try {
+      url = new URL(rawUrl);
+      if (url.protocol !== 'https:' || url.username || url.password) continue;
+    } catch {
+      continue;
     }
-    return resolved.href;
-  } catch {
-    throw new Error('音频地址无效');
+
+    ids.add(id);
+    tracks.push({
+      id,
+      title,
+      artist,
+      url: url.href,
+      ...(typeof item?.artwork === 'string' && item.artwork.startsWith('https://')
+        ? { artwork: item.artwork }
+        : {}),
+      ...(Number.isFinite(Number(item?.duration)) && Number(item.duration) >= 0
+        ? { duration: Number(item.duration) }
+        : {}),
+    });
   }
+
+  if (tracks.length === 0) throw new Error('Meting source has no playable tracks');
+  return tracks;
 }
 
 export function isMusicEnabled(hostname, publicEnabled) {
@@ -237,10 +246,8 @@ function initMusicPlayer() {
     try {
       const response = await fetch(manifestUrl, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      tracks = normalizePlaylist(await response.json()).map((track) => ({
-        ...track,
-        url: resolveTrackSource(track.src, manifestUrl),
-      }));
+      const payload = await response.json();
+      tracks = normalizeMetingTracks(payload);
       renderPlaylist();
       const storedTrack = readStorage(TRACK_STORAGE_KEY);
       const storedIndex = tracks.findIndex((track) => track.id === storedTrack);
